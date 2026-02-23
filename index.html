@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>✨ おてつだいポイントカード ✨</title>
-  <meta name="description" content="おてつだいをしたらスタンプがもらえるよ！まほうのポイントカード">
+  <title>🌸 おてつだいポイントカード 🌸</title>
+  <meta name="description" content="おてつだいをしたらスタンプがもらえるよ！おはなのポイントカード">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ✨ きらきらパーティクル背景 -->
+  <!-- 🌸 花びらパーティクル背景 -->
   <div id="sparkles" class="sparkles"></div>
 
   <!-- ============ メイン画面 ============ -->
   <div id="main-screen" class="screen active">
     <header class="app-header">
-      <h1 class="app-title">✨ おてつだいポイントカード ✨</h1>
-      <div class="card-number" id="card-number">🏰 1かいめのカード</div>
+      <h1 class="app-title">🌸 おてつだいポイントカード 🌸</h1>
+      <div class="card-number" id="card-number">🌷 1かいめのカード</div>
     </header>
 
     <div class="stamp-card" id="stamp-card">
@@ -31,7 +31,7 @@
 
     <div class="main-buttons">
       <button class="btn btn-primary" id="btn-otetsudai" onclick="showChoreModal()">
-        🪄 おてつだいした！
+        🌼 おてつだいした！
       </button>
       <button class="btn btn-secondary" id="btn-history" onclick="showHistory()">
         📖 れきし
@@ -42,7 +42,7 @@
   <!-- ============ お手伝い選択モーダル ============ -->
   <div id="chore-modal" class="modal-overlay" onclick="closeModal(event)">
     <div class="modal" onclick="event.stopPropagation()">
-      <h2 class="modal-title">🌟 なにをおてつだいしたかな？</h2>
+      <h2 class="modal-title">🌸 なにをおてつだいしたかな？</h2>
       <div class="chore-list" id="chore-list">
         <!-- JS で生成 -->
       </div>
@@ -70,12 +70,12 @@
   <div id="celebration-overlay" class="celebration-overlay">
     <div class="celebration-content">
       <div class="celebration-stars" id="celebration-stars"></div>
-      <div class="celebration-castle">🏰</div>
+      <div class="celebration-castle">🦋</div>
       <h2 class="celebration-title" id="celebration-title">🎊 やったね！ 🎊</h2>
       <p class="celebration-message" id="celebration-message">カード 1かいめ たっせい！！</p>
-      <p class="celebration-sub">すごいね！まほうつかいに なれたよ！✨</p>
+      <p class="celebration-sub">すごいね！おはなのようせいに なれたよ！🌸</p>
       <button class="btn btn-primary celebration-btn" onclick="startNewCard()">
-        🪄 つぎのカードへ！
+        🌼 つぎのカードへ！
       </button>
     </div>
     <canvas id="confetti-canvas"></canvas>

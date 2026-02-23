@@ -17,7 +17,7 @@ const CHORES = [
 ];
 
 const TOTAL_SLOTS = 15;
-const STAMP_ICONS = ['⭐', '🌟', '💫', '✨', '👑', '🪄', '💎', '🦋'];
+const STAMP_ICONS = ['🌸', '🌷', '🌺', '🌻', '🌼', '🦋', '🌹', '💐'];
 const STORAGE_KEY = 'otetsudai_stamp_card';
 
 // ── State ──
@@ -91,7 +91,7 @@ function renderCard() {
   const counterEl = document.getElementById('stamp-counter');
 
   const card = appState.currentCard;
-  cardNumEl.textContent = `🏰 ${card.cardNumber}かいめのカード`;
+  cardNumEl.textContent = `🌷 ${card.cardNumber}かいめのカード`;
 
   const filledCount = card.stamps.length;
   counterEl.textContent = `⭐ ${filledCount} / ${TOTAL_SLOTS}`;
@@ -264,7 +264,7 @@ function createStampBurst(slotEl) {
       position: fixed;
       width: 6px;
       height: 6px;
-      background: ${['#F5C842', '#D4578B', '#E8D5F5', '#FFE082'][i % 4]};
+      background: ${['#F5A3B8', '#E8789A', '#FDDDE6', '#B4A0D6'][i % 4]};
       border-radius: 50%;
       pointer-events: none;
       z-index: 50;
@@ -319,7 +319,7 @@ function createCelebrationStars() {
   const container = document.getElementById('celebration-stars');
   container.innerHTML = '';
 
-  const icons = ['⭐', '🌟', '✨', '💫', '👑', '🪄', '💎', '🦋', '🏰', '💜'];
+  const icons = ['🌸', '🌷', '🌺', '🌻', '🌼', '🦋', '🌹', '💐', '🌿', '💮'];
 
   for (let i = 0; i < 30; i++) {
     const star = document.createElement('div');
@@ -342,7 +342,7 @@ function startConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const colors = ['#F5C842', '#D4578B', '#5B2C8E', '#2E4482', '#FFE082', '#E8D5F5', '#FF6B9D'];
+  const colors = ['#F5A3B8', '#E8789A', '#FDDDE6', '#B4A0D6', '#FFD1DC', '#FFF0F5', '#C45B7C'];
   const confetti = [];
 
   for (let i = 0; i < 150; i++) {
@@ -431,7 +431,7 @@ function renderHistoryList() {
   listEl.innerHTML = '';
 
   if (appState.completedCards.length === 0) {
-    listEl.innerHTML = '<div class="history-empty">🏰 まだカードをたっせいしていないよ<br>がんばろう！</div>';
+    listEl.innerHTML = '<div class="history-empty">🌷 まだカードをたっせいしていないよ<br>がんばろう！</div>';
     return;
   }
 
@@ -446,7 +446,7 @@ function renderHistoryList() {
     const choresText = getChoresSummary(card.stamps);
 
     item.innerHTML = `
-      <div class="history-title">🏰 ${card.cardNumber}かいめのカード 🎊</div>
+      <div class="history-title">🌷 ${card.cardNumber}かいめのカード 🎊</div>
       <div class="history-date">たっせい日: ${card.completedDate}</div>
       <div class="history-date" style="margin-top: 4px">${choresText}</div>
     `;
