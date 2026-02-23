@@ -1,0 +1,761 @@
+/* ============================================
+   お手伝いポイントカード - style.css
+   ディズニー風ファンタジーテーマ
+   ============================================ */
+
+/* ── CSS Variables ── */
+:root {
+  --royal-purple: #5B2C8E;
+  --deep-purple: #3A1A5E;
+  --magic-blue: #2E4482;
+  --enchanted-pink: #D4578B;
+  --gold: #F5C842;
+  --gold-dark: #D4A017;
+  --gold-light: #FFE082;
+  --starlight: #E8D5F5;
+  --white: #FFFFFF;
+  --card-bg: rgba(255, 255, 255, 0.12);
+  --card-border: rgba(245, 200, 66, 0.4);
+  --shadow-magic: 0 8px 32px rgba(91, 44, 142, 0.4);
+  --font-main: 'Zen Maru Gothic', 'Hiragino Maru Gothic Pro', sans-serif;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background: linear-gradient(135deg, #1a0533 0%, #2E4482 40%, #1a0533 70%, #3A1A5E 100%);
+  min-height: 100vh;
+  color: var(--white);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── きらきらパーティクル ── */
+.sparkles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: sparkle-float linear infinite;
+  box-shadow: 0 0 6px var(--gold), 0 0 12px var(--gold-light);
+}
+
+@keyframes sparkle-float {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) scale(0);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10vh) scale(1);
+  }
+}
+
+/* ── Screen Management ── */
+.screen {
+  display: none;
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  min-height: 100vh;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* ── Header ── */
+.app-header {
+  text-align: center;
+  padding: 16px 0 8px;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  letter-spacing: 0.05em;
+}
+
+.card-number {
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  margin-top: 8px;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(245, 200, 66, 0.3);
+}
+
+/* ── Stamp Card Grid ── */
+.stamp-card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 20px;
+  margin: 16px 0;
+  background: var(--card-bg);
+  border-radius: 20px;
+  border: 2px solid var(--card-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-magic), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.stamp-slot {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px dashed rgba(245, 200, 66, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.stamp-slot.empty::after {
+  content: '☆';
+  font-size: 1.4rem;
+  color: rgba(245, 200, 66, 0.2);
+}
+
+.stamp-slot.filled {
+  background: linear-gradient(135deg, rgba(245, 200, 66, 0.2), rgba(212, 87, 139, 0.2));
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 12px rgba(245, 200, 66, 0.3), inset 0 0 8px rgba(245, 200, 66, 0.1);
+}
+
+.stamp-slot .stamp-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.stamp-slot .stamp-number {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-size: 0.55rem;
+  color: var(--gold-light);
+  opacity: 0.7;
+}
+
+/* Stamp animation */
+.stamp-slot.stamping {
+  animation: stamp-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes stamp-pop {
+  0% {
+    transform: scale(0.3) rotate(-20deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.3) rotate(5deg);
+  }
+  70% {
+    transform: scale(0.9) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* ── Stamp Counter ── */
+.stamp-counter {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 8px 0 16px;
+  text-shadow: 0 0 8px rgba(245, 200, 66, 0.3);
+}
+
+/* ── Buttons ── */
+.main-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn {
+  font-family: var(--font-main);
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+  transition: all 0.5s ease;
+  transform: translateX(-100%);
+}
+
+.btn:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  color: var(--deep-purple);
+  font-size: 1.3rem;
+  padding: 16px 40px;
+  box-shadow: 0 6px 20px rgba(245, 200, 66, 0.4), 0 2px 8px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 320px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(245, 200, 66, 0.5), 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(245, 200, 66, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--starlight);
+  font-size: 1.1rem;
+  padding: 12px 32px;
+  border: 2px solid rgba(245, 200, 66, 0.3);
+  backdrop-filter: blur(5px);
+  width: 100%;
+  max-width: 320px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: var(--gold);
+}
+
+.btn-small {
+  font-size: 1rem;
+  padding: 10px 24px;
+  width: auto;
+}
+
+.btn-close {
+  background: rgba(255,255,255,0.08);
+  color: var(--starlight);
+  font-size: 1rem;
+  padding: 10px 24px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.btn-close:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* ── Modal ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: linear-gradient(135deg, #2a1645 0%, #1a2a5e 100%);
+  border-radius: 24px;
+  padding: 24px 20px;
+  max-width: 420px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 2px solid var(--card-border);
+  box-shadow: var(--shadow-magic);
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+/* ── Chore List ── */
+.chore-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.chore-btn {
+  font-family: var(--font-main);
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(245, 200, 66, 0.2);
+  border-radius: 16px;
+  padding: 12px 8px;
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.chore-btn:hover {
+  background: rgba(245, 200, 66, 0.15);
+  border-color: var(--gold);
+  transform: scale(1.03);
+}
+
+.chore-btn:active {
+  transform: scale(0.97);
+}
+
+.chore-btn .chore-icon {
+  font-size: 1.8rem;
+}
+
+.chore-btn .chore-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.chore-btn .chore-stars {
+  font-size: 0.75rem;
+  color: var(--gold);
+}
+
+/* ── Custom Chore Input ── */
+.custom-chore {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(245, 200, 66, 0.15);
+}
+
+.custom-title {
+  font-size: 1rem;
+  color: var(--gold-light);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.custom-input {
+  font-family: var(--font-main);
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid rgba(245, 200, 66, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 1rem;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.custom-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(245, 200, 66, 0.2);
+}
+
+.custom-stamp-select {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.stamp-option {
+  font-size: 1rem;
+  color: var(--gold-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stamp-option input[type="radio"] {
+  accent-color: var(--gold);
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Celebration Overlay ── */
+.celebration-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  background: radial-gradient(ellipse at center, rgba(91, 44, 142, 0.95) 0%, rgba(26, 5, 51, 0.98) 100%);
+  justify-content: center;
+  align-items: center;
+}
+
+.celebration-overlay.active {
+  display: flex;
+}
+
+.celebration-content {
+  text-align: center;
+  z-index: 201;
+  padding: 20px;
+  animation: celebration-appear 0.8s ease-out;
+}
+
+@keyframes celebration-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(30px);
+  }
+  60% {
+    transform: scale(1.1) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.celebration-castle {
+  font-size: 5rem;
+  margin-bottom: 8px;
+  animation: castle-glow 2s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 20px rgba(245, 200, 66, 0.6));
+}
+
+@keyframes castle-glow {
+  0% { filter: drop-shadow(0 0 20px rgba(245, 200, 66, 0.4)); transform: scale(1); }
+  100% { filter: drop-shadow(0 0 40px rgba(245, 200, 66, 0.8)); transform: scale(1.05); }
+}
+
+.celebration-title {
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  animation: title-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes title-shimmer {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+.celebration-message {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+  text-shadow: 0 0 20px rgba(212, 87, 139, 0.5);
+}
+
+.celebration-sub {
+  font-size: 1rem;
+  color: var(--starlight);
+  margin-bottom: 24px;
+}
+
+.celebration-btn {
+  animation: btn-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 6px 20px rgba(245, 200, 66, 0.4); }
+  50% { box-shadow: 0 6px 30px rgba(245, 200, 66, 0.7); }
+}
+
+.celebration-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.celebration-star {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: star-fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes star-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px) rotate(0deg) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) rotate(72deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(80vh) rotate(360deg) scale(0.5);
+  }
+}
+
+/* Confetti Canvas */
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 199;
+}
+
+/* ── History Screen ── */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+
+.history-card-item {
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.history-card-item:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 200, 66, 0.2);
+}
+
+.history-card-item .history-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.history-card-item .history-date {
+  font-size: 0.85rem;
+  color: var(--starlight);
+  opacity: 0.7;
+}
+
+.history-empty {
+  text-align: center;
+  color: var(--starlight);
+  opacity: 0.6;
+  font-size: 1rem;
+  padding: 40px 0;
+}
+
+/* History Detail */
+.history-card .stamp-slot {
+  cursor: default;
+}
+
+.history-chore-list {
+  margin: 16px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-chore-item {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.history-chore-item .hc-icon {
+  font-size: 1.3rem;
+}
+
+.history-chore-item .hc-name {
+  flex: 1;
+  font-weight: 700;
+}
+
+.history-chore-item .hc-date {
+  font-size: 0.75rem;
+  color: var(--starlight);
+  opacity: 0.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1.25rem;
+  }
+
+  .card-number {
+    font-size: 1rem;
+  }
+
+  .stamp-card {
+    gap: 8px;
+    padding: 14px;
+    margin: 12px 0;
+  }
+
+  .stamp-slot {
+    border-radius: 12px;
+  }
+
+  .stamp-slot .stamp-icon {
+    font-size: 1.4rem;
+  }
+
+  .stamp-slot.empty::after {
+    font-size: 1.1rem;
+  }
+
+  .btn-primary {
+    font-size: 1.15rem;
+    padding: 14px 32px;
+  }
+
+  .chore-list {
+    gap: 8px;
+  }
+
+  .chore-btn {
+    padding: 10px 6px;
+  }
+
+  .chore-btn .chore-icon {
+    font-size: 1.5rem;
+  }
+
+  .chore-btn .chore-name {
+    font-size: 0.75rem;
+  }
+
+  .celebration-castle {
+    font-size: 4rem;
+  }
+
+  .celebration-title {
+    font-size: 1.6rem;
+  }
+
+  .celebration-message {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .stamp-card {
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .stamp-slot .stamp-icon {
+    font-size: 1.2rem;
+  }
+
+  .chore-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+}
+
+/* ── Scrollbar styling ── */
+.modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: rgba(245, 200, 66, 0.3);
+  border-radius: 3px;
+}
+
+/* ── Utility ── */
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

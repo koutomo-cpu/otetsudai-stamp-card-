@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>✨ おてつだいポイントカード ✨</title>
+  <meta name="description" content="おてつだいをしたらスタンプがもらえるよ！まほうのポイントカード">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ✨ きらきらパーティクル背景 -->
+  <div id="sparkles" class="sparkles"></div>
+
+  <!-- ============ メイン画面 ============ -->
+  <div id="main-screen" class="screen active">
+    <header class="app-header">
+      <h1 class="app-title">✨ おてつだいポイントカード ✨</h1>
+      <div class="card-number" id="card-number">🏰 1かいめのカード</div>
+    </header>
+
+    <div class="stamp-card" id="stamp-card">
+      <!-- JS で 15マス生成 -->
+    </div>
+
+    <div class="stamp-counter" id="stamp-counter">
+      ⭐ 0 / 15
+    </div>
+
+    <div class="main-buttons">
+      <button class="btn btn-primary" id="btn-otetsudai" onclick="showChoreModal()">
+        🪄 おてつだいした！
+      </button>
+      <button class="btn btn-secondary" id="btn-history" onclick="showHistory()">
+        📖 れきし
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ お手伝い選択モーダル ============ -->
+  <div id="chore-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h2 class="modal-title">🌟 なにをおてつだいしたかな？</h2>
+      <div class="chore-list" id="chore-list">
+        <!-- JS で生成 -->
+      </div>
+
+      <!-- 自由入力セクション -->
+      <div class="custom-chore">
+        <h3 class="custom-title">✏️ そのほか</h3>
+        <input type="text" id="custom-chore-input" class="custom-input" placeholder="おてつだいをかいてね" maxlength="20">
+        <div class="custom-stamp-select">
+          <label class="stamp-option">
+            <input type="radio" name="custom-stamps" value="1" checked> ⭐×1
+          </label>
+          <label class="stamp-option">
+            <input type="radio" name="custom-stamps" value="2"> ⭐×2
+          </label>
+        </div>
+        <button class="btn btn-primary btn-small" onclick="addCustomChore()">けってい</button>
+      </div>
+
+      <button class="btn btn-close" onclick="closeChoreModal()">✕ もどる</button>
+    </div>
+  </div>
+
+  <!-- ============ 達成演出オーバーレイ ============ -->
+  <div id="celebration-overlay" class="celebration-overlay">
+    <div class="celebration-content">
+      <div class="celebration-stars" id="celebration-stars"></div>
+      <div class="celebration-castle">🏰</div>
+      <h2 class="celebration-title" id="celebration-title">🎊 やったね！ 🎊</h2>
+      <p class="celebration-message" id="celebration-message">カード 1かいめ たっせい！！</p>
+      <p class="celebration-sub">すごいね！まほうつかいに なれたよ！✨</p>
+      <button class="btn btn-primary celebration-btn" onclick="startNewCard()">
+        🪄 つぎのカードへ！
+      </button>
+    </div>
+    <canvas id="confetti-canvas"></canvas>
+  </div>
+
+  <!-- ============ 履歴画面 ============ -->
+  <div id="history-screen" class="screen">
+    <header class="app-header">
+      <h1 class="app-title">📖 れきし</h1>
+    </header>
+
+    <div class="history-list" id="history-list">
+      <!-- JS で生成 -->
+    </div>
+
+    <button class="btn btn-secondary" onclick="showMain()">🏠 もどる</button>
+  </div>
+
+  <!-- ============ 履歴詳細画面 ============ -->
+  <div id="history-detail-screen" class="screen">
+    <header class="app-header">
+      <h1 class="app-title" id="history-detail-title">📖 1かいめのカード</h1>
+    </header>
+
+    <div class="stamp-card history-card" id="history-stamp-card">
+      <!-- JS で生成 -->
+    </div>
+
+    <div class="history-chore-list" id="history-chore-list">
+      <!-- JS で生成 -->
+    </div>
+
+    <button class="btn btn-secondary" onclick="showHistory()">📖 れきしにもどる</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
