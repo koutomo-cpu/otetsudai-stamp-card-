@@ -116,6 +116,9 @@ function renderCard() {
       slot.appendChild(numSpan);
 
       slot.title = stamp.chore;
+
+      // Tap to undo
+      slot.onclick = () => showUndoConfirm(i);
     } else {
       slot.classList.add('empty');
     }
@@ -132,6 +135,42 @@ function renderCard() {
     btn.disabled = false;
     btn.style.opacity = '1';
   }
+}
+
+// ── Undo Stamp ──
+let undoTargetSlot = null;
+
+function showUndoConfirm(slotIndex) {
+  const stamp = appState.currentCard.stamps.find(s => s.slot === slotIndex);
+  if (!stamp) return;
+
+  undoTargetSlot = slotIndex;
+
+  document.getElementById('undo-stamp-preview').textContent = stamp.icon;
+  document.getElementById('undo-chore-name').textContent = `${stamp.choreIcon || stamp.icon} ${stamp.chore}`;
+  document.getElementById('undo-modal').classList.add('active');
+}
+
+function undoStamp() {
+  if (undoTargetSlot === null) return;
+
+  appState.currentCard.stamps = appState.currentCard.stamps.filter(s => s.slot !== undoTargetSlot);
+  undoTargetSlot = null;
+
+  saveState();
+  closeUndoModalDirect();
+  renderCard();
+}
+
+function closeUndoModal(event) {
+  if (event.target === event.currentTarget) {
+    closeUndoModalDirect();
+  }
+}
+
+function closeUndoModalDirect() {
+  document.getElementById('undo-modal').classList.remove('active');
+  undoTargetSlot = null;
 }
 
 // ── Chore Modal ──

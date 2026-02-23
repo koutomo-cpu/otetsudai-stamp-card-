@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -10,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- 🌸 花びらパーティクル背景 -->
   <div id="sparkles" class="sparkles"></div>
@@ -81,6 +83,19 @@
     <canvas id="confetti-canvas"></canvas>
   </div>
 
+  <!-- ============ スタンプ取り消し確認モーダル ============ -->
+  <div id="undo-modal" class="modal-overlay" onclick="closeUndoModal(event)">
+    <div class="modal undo-modal" onclick="event.stopPropagation()">
+      <div class="undo-stamp-preview" id="undo-stamp-preview">🌸</div>
+      <h2 class="modal-title">このスタンプをけす？</h2>
+      <p class="undo-chore-name" id="undo-chore-name"></p>
+      <div class="undo-buttons">
+        <button class="btn btn-danger" id="btn-undo-confirm" onclick="undoStamp()">🗑️ けす</button>
+        <button class="btn btn-secondary btn-small" onclick="closeUndoModalDirect()">🌸 やめる</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ 履歴画面 ============ -->
   <div id="history-screen" class="screen">
     <header class="app-header">
@@ -113,4 +128,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>
