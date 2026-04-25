@@ -4,16 +4,18 @@
 
 // ── お手伝い定義 ──
 const CHORES = [
-  { id: 'souji', name: 'おそうじ', icon: '🧹', stamps: 2 },
-  { id: 'kusamushiri', name: 'くさむしり', icon: '🌿', stamps: 2 },
-  { id: 'okaimono', name: 'おかいものてつだい', icon: '🛒', stamps: 2 },
-  { id: 'shredder', name: 'シュレッダー', icon: '📄', stamps: 2 },
   { id: 'gohan', name: 'ごはんのじゅんび', icon: '🍚', stamps: 1 },
-  { id: 'sentaku', name: 'おせんたくたたみ', icon: '👕', stamps: 1 },
-  { id: 'futon', name: 'ふとんたたみ', icon: '🛏️', stamps: 1 },
+  { id: 'curtain', name: 'カーテンをしめる', icon: '🪟', stamps: 1 },
   { id: 'okataduke', name: 'おかたづけ', icon: '📦', stamps: 1 },
-  { id: 'mizuyari', name: 'おみずやり', icon: '🌱', stamps: 1 },
   { id: 'kanakun', name: 'かなくんと遊ぶ', icon: '👶', stamps: 1 },
+  { id: 'mama', name: 'ママのおてつだい', icon: '👩', stamps: 1 },
+  { id: 'papa', name: 'パパのおてつだい', icon: '👨', stamps: 1 },
+  { id: 'futon', name: 'ふとんたたみ', icon: '🛏️', stamps: 1 },
+  { id: 'sentaku', name: 'おせんたくたたみ', icon: '👕', stamps: 1 },
+  { id: 'oryouri', name: 'おりょうりのてつだい', icon: '🍳', stamps: 2 },
+  { id: 'souji', name: 'おそうじ', icon: '🧹', stamps: 2 },
+  { id: 'okaimono', name: 'おかいものてつだい', icon: '🛒', stamps: 2 },
+  { id: 'kusamushiri', name: 'くさむしり', icon: '🌿', stamps: 2 },
 ];
 
 const TOTAL_SLOTS = 15;
